@@ -266,13 +266,6 @@ jobs:
         if: env.ENABLE_SUSFS == 'true'
         run: |
           cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
-          if [[ ${{ env.SUSFS_KERNELSU_MODE }} == 0 ]]; then
-              echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-          else
-              if [[ ${{ env.SUSFS_KERNELSU_MODE }} == 1 ]]; then
-                echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-              fi
-          fi
           echo "CONFIG_KSU_MANUAL_HOOK=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
           echo "CONFIG_KSU_SUSFS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
           
@@ -288,7 +281,6 @@ jobs:
           cp susfs4ksu/kernel_patches/include/linux/* include/linux/
 
           cd ${{ env.KERNELSU_TYPE }}
-          patch -p1 < 10_enable_susfs_for_ksu.patch
           cd ../
           patch -p1 < 50_add_susfs_in_kernel-$SUSFS_KERNEL_VERSION.patch
 
