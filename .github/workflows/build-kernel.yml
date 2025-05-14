@@ -282,7 +282,7 @@ jobs:
 
           cd ${{ env.KERNELSU_TYPE }}
           cd ../
-          patch -p1 < 50_add_susfs_in_kernel-$SUSFS_KERNEL_VERSION.patch
+          patch -p1 < 50_add_susfs_in_kernel-5.4.patch
 
       - name: Setup ccache
         if: env.ENABLE_CCACHE == 'true'
